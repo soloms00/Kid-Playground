@@ -612,8 +612,7 @@ export default function App() {
     const record = { fills: fills[currentFillKey] || [], id: Date.now() };
     setSavedPalettes((prev) => ({
       ...prev,
-      [currentSavedKey]: [record, ...(prev[currentSavedKey] || [])]
-        .slice(0, 6),
+      [currentSavedKey]: [record, ...(prev[currentSavedKey] || [])].slice(0, 6),
     }));
     playBeep(880, 0.12, "triangle", 0.035);
   }, [fills, currentFillKey, currentSavedKey, playBeep]);
@@ -638,20 +637,15 @@ export default function App() {
     ctx.drawImage(paintCanvas, 0, 0);
     ctx.drawImage(outlineCanvas, 0, 0);
     const link = document.createElement("a");
-    link.download = `${currentCharacter.name
-      .toLowerCase()
-      .replace(/\s+/g, "-")}.png`;
+    link.download = `${currentCharacter.name.toLowerCase().replace(/\s+/g, "-")}.png`;
     link.href = exportCanvas.toDataURL("image/png");
     link.click();
   }, [currentCharacter.name]);
 
-  const openCharacter = useCallback(
-    (character) => {
-      setCharacterId(character.id);
-      setScreen("studio");
-    },
-    []
-  );
+  const openCharacter = useCallback((character) => {
+    setCharacterId(character.id);
+    setScreen("studio");
+  }, []);
 
   useEffect(() => {
     return () => {
@@ -665,9 +659,7 @@ export default function App() {
         try {
           osc.stop();
           osc.disconnect();
-        } catch (e) {
-          console.error("Error stopping oscillator:", e);
-        }
+        } catch (e) {}
       });
     };
   }, []);
@@ -707,33 +699,13 @@ export default function App() {
               >
                 Color & Tap Fun
               </div>
-              <h1
-                style={{
-                  fontSize: 42,
-                  margin: "16px 0 8px",
-                  color: "#1f2937",
-                }}
-              >
+              <h1 style={{ fontSize: 42, margin: "16px 0 8px", color: "#1f2937" }}>
                 Pick a picture and start coloring
               </h1>
-              <p
-                style={{
-                  fontSize: 18,
-                  color: "#4b5563",
-                  maxWidth: 700,
-                }}
-              >
-                Big buttons, happy pictures, finger painting, and simple
-                tap-to-fill zones made for ages 3 to 6.
+              <p style={{ fontSize: 18, color: "#4b5563", maxWidth: 700 }}>
+                Big buttons, happy pictures, finger painting, and simple tap-to-fill zones made for ages 3 to 6.
               </p>
-              <div
-                style={{
-                  display: "flex",
-                  flexWrap: "wrap",
-                  gap: 12,
-                  marginTop: 18,
-                }}
-              >
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 12, marginTop: 18 }}>
                 {CATEGORIES.map((category) => (
                   <button
                     key={category}
@@ -802,22 +774,10 @@ export default function App() {
                       }}
                     >
                       <div>
-                        <div
-                          style={{
-                            fontSize: 28,
-                            fontWeight: 800,
-                            color: "#1f2937",
-                          }}
-                        >
+                        <div style={{ fontSize: 28, fontWeight: 800, color: "#1f2937" }}>
                           {character.name}
                         </div>
-                        <div
-                          style={{
-                            fontSize: 14,
-                            fontWeight: 700,
-                            color: "#6b7280",
-                          }}
-                        >
+                        <div style={{ fontSize: 14, fontWeight: 700, color: "#6b7280" }}>
                           {character.category}
                         </div>
                       </div>
@@ -853,17 +813,8 @@ export default function App() {
                 flexWrap: "wrap",
               }}
             >
-              <div
-                style={{
-                  display: "flex",
-                  gap: 12,
-                  flexWrap: "wrap",
-                }}
-              >
-                <button
-                  onClick={() => setScreen("home")}
-                  style={buttonStyle(false)}
-                >
+              <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+                <button onClick={() => setScreen("home")} style={buttonStyle(false)}>
                   Home
                 </button>
                 <div
@@ -926,35 +877,19 @@ export default function App() {
                       marginBottom: 22,
                     }}
                   >
-                    <div
-                      style={{
-                        fontWeight: 800,
-                        fontSize: 20,
-                        marginBottom: 12,
-                      }}
-                    >
+                    <div style={{ fontWeight: 800, fontSize: 20, marginBottom: 12 }}>
                       Parent Corner
                     </div>
                     <div style={{ display: "grid", gap: 10 }}>
                       <button
-                        onClick={() =>
-                          setMasterSoundEnabled((v) => !v)
-                        }
-                        style={{
-                          ...buttonStyle(masterSoundEnabled),
-                          width: "100%",
-                        }}
+                        onClick={() => setMasterSoundEnabled((v) => !v)}
+                        style={{ ...buttonStyle(masterSoundEnabled), width: "100%" }}
                       >
                         Allow sounds {masterSoundEnabled ? "On" : "Off"}
                       </button>
                       <button
-                        onClick={() =>
-                          setMasterMusicEnabled((v) => !v)
-                        }
-                        style={{
-                          ...buttonStyle(masterMusicEnabled),
-                          width: "100%",
-                        }}
+                        onClick={() => setMasterMusicEnabled((v) => !v)}
+                        style={{ ...buttonStyle(masterMusicEnabled), width: "100%" }}
                       >
                         Allow music {masterMusicEnabled ? "On" : "Off"}
                       </button>
@@ -969,9 +904,7 @@ export default function App() {
                 )}
 
                 <div style={{ marginBottom: 22 }}>
-                  <div style={{ marginBottom: 10, fontWeight: 800 }}>
-                    Choose a color
-                  </div>
+                  <div style={{ marginBottom: 10, fontWeight: 800 }}>Choose a color</div>
                   <div
                     style={{
                       display: "grid",
@@ -986,10 +919,7 @@ export default function App() {
                         style={{
                           height: 52,
                           borderRadius: 18,
-                          border:
-                            selectedColor === color
-                              ? "4px solid #111827"
-                              : "4px solid white",
+                          border: selectedColor === color ? "4px solid #111827" : "4px solid white",
                           background: color,
                           cursor: "pointer",
                         }}
@@ -999,9 +929,7 @@ export default function App() {
                 </div>
 
                 <div style={{ marginBottom: 22 }}>
-                  <div style={{ marginBottom: 10, fontWeight: 800 }}>
-                    Choose a tool
-                  </div>
+                  <div style={{ marginBottom: 10, fontWeight: 800 }}>Choose a tool</div>
                   <div
                     style={{
                       display: "grid",
@@ -1027,12 +955,7 @@ export default function App() {
 
                 {tool === "draw" && (
                   <div style={{ marginBottom: 22 }}>
-                    <div
-                      style={{
-                        marginBottom: 10,
-                        fontWeight: 800,
-                      }}
-                    >
+                    <div style={{ marginBottom: 10, fontWeight: 800 }}>
                       Brush size: {brushSize}
                     </div>
                     <input
@@ -1048,34 +971,19 @@ export default function App() {
                 )}
 
                 <div style={{ display: "grid", gap: 10 }}>
-                  <button
-                    onClick={saveCurrentPalette}
-                    style={buttonStyle(false)}
-                  >
+                  <button onClick={saveCurrentPalette} style={buttonStyle(false)}>
                     Save Palette
                   </button>
-                  <button
-                    onClick={() => setSoundEnabled((v) => !v)}
-                    style={buttonStyle(soundEnabled)}
-                  >
+                  <button onClick={() => setSoundEnabled((v) => !v)} style={buttonStyle(soundEnabled)}>
                     Button Sounds {soundEnabled ? "On" : "Off"}
                   </button>
-                  <button
-                    onClick={() => setMusicEnabled((v) => !v)}
-                    style={buttonStyle(musicEnabled)}
-                  >
+                  <button onClick={() => setMusicEnabled((v) => !v)} style={buttonStyle(musicEnabled)}>
                     Music {musicEnabled ? "On" : "Off"}
                   </button>
-                  <button
-                    onClick={resetPage}
-                    style={buttonStyle(false)}
-                  >
+                  <button onClick={resetPage} style={buttonStyle(false)}>
                     Clear Page
                   </button>
-                  <button
-                    onClick={downloadImage}
-                    style={buttonStyle(false)}
-                  >
+                  <button onClick={downloadImage} style={buttonStyle(false)}>
                     Save Picture
                   </button>
                 </div>
@@ -1168,9 +1076,7 @@ export default function App() {
                     boxShadow: "0 8px 24px rgba(0,0,0,0.08)",
                   }}
                 >
-                  <h2 style={{ fontSize: 28, marginTop: 0 }}>
-                    Saved Palettes
-                  </h2>
+                  <h2 style={{ fontSize: 28, marginTop: 0 }}>Saved Palettes</h2>
                   {(savedPalettes[currentSavedKey] || []).length === 0 ? (
                     <div
                       style={{
@@ -1191,36 +1097,34 @@ export default function App() {
                         gap: 14,
                       }}
                     >
-                      {(savedPalettes[currentSavedKey] || []).map(
-                        (record, index) => (
-                          <button
-                            key={record.id || index}
-                            onClick={() => loadSavedPalette(record)}
+                      {(savedPalettes[currentSavedKey] || []).map((record, index) => (
+                        <button
+                          key={record.id || index}
+                          onClick={() => loadSavedPalette(record)}
+                          style={{
+                            border: "1px solid #e5e7eb",
+                            background: "white",
+                            borderRadius: 20,
+                            padding: 12,
+                            cursor: "pointer",
+                          }}
+                        >
+                          <div
                             style={{
-                              border: "1px solid #e5e7eb",
-                              background: "white",
-                              borderRadius: 20,
-                              padding: 12,
-                              cursor: "pointer",
+                              height: 90,
+                              borderRadius: 14,
+                              background: "#f8fafc",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              fontWeight: 800,
+                              color: "#6b7280",
                             }}
                           >
-                            <div
-                              style={{
-                                height: 90,
-                                borderRadius: 14,
-                                background: "#f8fafc",
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                fontWeight: 800,
-                                color: "#6b7280",
-                              }}
-                            >
-                              Palette {index + 1}
-                            </div>
-                          </button>
-                        )
-                      )}
+                            Palette {index + 1}
+                          </div>
+                        </button>
+                      ))}
                     </div>
                   )}
                 </div>
